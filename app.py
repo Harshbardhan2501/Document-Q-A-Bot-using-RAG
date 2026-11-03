@@ -10,6 +10,10 @@ from langchain_community.vectorstores import InMemoryVectorStore
 from langchain_core.exceptions import ModelAPIError
 import streamlit as st
 from time import sleep
+import os
+
+if"GOOGLE_API_KEY" in st.secrets:
+    os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
 
 llm = ChatGoogleGenerativeAI(model="gemini-3.5-flash-lite", retries=1)
 

@@ -4,3 +4,4 @@ langchain-text-splitters
 langchain-community
 dotenv
 pypdf
+streamlit

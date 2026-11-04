@@ -9,11 +9,17 @@ from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGener
 from langchain_community.vectorstores import InMemoryVectorStore
 from langchain_core.exceptions import ModelAPIError
 import streamlit as st
+from streamlit.errors import StreamlitSecretNotFoundError
 from time import sleep
 import os
 
-if"GOOGLE_API_KEY" in st.secrets:
-    os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
+try:
+    google_api_key = st.secrets.get("GOOGLE_API_KEY")
+except StreamlitSecretNotFoundError:
+    google_api_key = None
+
+if google_api_key:
+    os.environ["GOOGLE_API_KEY"] = google_api_key
 
 llm = ChatGoogleGenerativeAI(model="gemini-3.5-flash-lite", retries=1)
 
